@@ -11,11 +11,26 @@ const PessoaValidator=[
       }
       return true;
     }),
-  body('salario').notEmpty().withMessage("Salário é obrigatório").isFloat({min: 0}).withMessage("Valor deve ser maior que 0"), 
+  body('salario').notEmpty().withMessage("Salário é obrigatório").isFloat({min: 0}).withMessage("Valor deve ser maior que 0"),
+  (req,res,next)=> {
+      const erros=validationResult(req);
+       if (!erros.isEmpty()) {
+      return res.status(422).json({ erros: erros.array() });
+    }
+    next();
+      
+  }
 ]
 const PessoaIdValidator=[param('id')
     .notEmpty().withMessage('ID é obrigatório')
     .isInt({ gt: 0 }).withMessage('ID deve ser um número inteiro positivo')
-    .toInt() ]
+    .toInt(),(req,res,next)=> {
+      const erros=validationResult(req);
+       if (!erros.isEmpty()) {
+      return res.status(422).json({ erros: erros.array() });
+    }
+    next();
+      
+  } ]
 
 module.exports={PessoaValidator,PessoaIdValidator};
