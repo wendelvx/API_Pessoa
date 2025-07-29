@@ -1,4 +1,4 @@
-const {body}=require('express-validator');
+const {body,validationResult}=require('express-validator');
 const {cpf}=require('cpf-cnpj-validator');
 const {param} = require('express-validator');
 
